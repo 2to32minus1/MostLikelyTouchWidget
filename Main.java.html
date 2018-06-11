@@ -1,0 +1,322 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Main.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #f4f4f4; background-color: #000000; font-family: Lucida Console}
+pre {color: #f4f4f4; background-color: #000000; font-family: Lucida Console}
+table {color: #000000; background-color: #e9e8e2; font-family: Lucida Console}
+.literal {color: #4cea4c}
+.caret-color-overwrite-mode {color: #000000}
+.string {color: #ffffff}
+.number {color: #74ceff}
+.comment {color: #00ccff}
+.caret-color-insert-mode {color: #ffc800}
+-->
+</style>
+</head>
+<body>
+<table width="100%"><tr><td align="center">Main.java</td></tr></table>
+<pre>
+  1 <span class="comment">////////////////////////</span>
+  2 <span class="comment">// Copyright (c) 2014 Richard Creamer - All Rights Reserved</span>
+  3 <span class="comment">////////////////////////</span>
+  4 
+  5 <span class="literal">import</span> java.awt.*;
+  6 <span class="literal">import</span> java.awt.font.LineMetrics;
+  7 <span class="literal">import</span> java.util.List;
+  8 <span class="literal">import</span> java.util.ArrayList;
+  9 <span class="literal">import</span> javax.swing.*;
+ 10 <span class="literal">import</span> javax.swing.border.*;
+ 11 
+ 12 <span class="comment">///////////////////////////////</span>
+ 13 <span class="comment">// Main tester class</span>
+ 14 <span class="comment">///////////////////////////////</span>
+ 15 
+ 16 <span class="literal">public</span> <span class="literal">class</span> Main {
+ 17 
+ 18     <span class="literal">public</span> <span class="literal">static</span> <span class="literal">void</span> main( String [] args ) {
+ 19         SwingUtilities.<span class="caret-color-insert-mode">invokeLater</span>( <span class="literal">new</span> Runnable() {
+ 20             @Override
+ 21             <span class="literal">public</span> <span class="literal">void</span> run() {
+ 22 
+ 23                 <span class="comment">// Create e-mail mockup JPanels</span>
+ 24                 JPanel checkboxCentroidsNoOverlayPanel = <span class="caret-color-insert-mode">makePanelWithInsets</span>( <span class="number">10</span>, <span class="literal">new</span> MockupMailPanel( <span class="literal">false</span>, <span class="literal">false</span> ) );
+ 25                 JPanel checkboxCentroidsWithOverlayPanel = <span class="caret-color-insert-mode">makePanelWithInsets</span>( <span class="number">10</span>, <span class="literal">new</span> MockupMailPanel( <span class="literal">false</span>, <span class="literal">true</span> ) );
+ 26                 JPanel checkboxCellsNoOverlayPanel = <span class="caret-color-insert-mode">makePanelWithInsets</span>( <span class="number">10</span>, <span class="literal">new</span> MockupMailPanel( <span class="literal">true</span>, <span class="literal">false</span> ) );
+ 27                 JPanel checkboxCellsWithOverlayPanel = <span class="caret-color-insert-mode">makePanelWithInsets</span>( <span class="number">10</span>, <span class="literal">new</span> MockupMailPanel( <span class="literal">true</span>, <span class="literal">true</span> ) );
+ 28 
+ 29                 <span class="comment">// Add titled border inside compound border</span>
+ 30                 checkboxCentroidsNoOverlayPanel.<span class="caret-color-insert-mode">setBorder</span>( <span class="literal">new</span> CompoundBorder( <span class="literal">new</span> TitledBorder( <span class="string">&quot;</span><span class="string"> Mail Mockup Checkbox Centroid - No Overlay </span><span class="string">&quot;</span> ), <span class="literal">new</span> EmptyBorder( <span class="number">0</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span> ) ) );
+ 31                 checkboxCentroidsWithOverlayPanel.<span class="caret-color-insert-mode">setBorder</span>( <span class="literal">new</span> CompoundBorder( <span class="literal">new</span> TitledBorder( <span class="string">&quot;</span><span class="string"> Above w/ &#39;Most Likely Widget&#39; Touch Test Overlay </span><span class="string">&quot;</span> ), <span class="literal">new</span> EmptyBorder( <span class="number">0</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span> ) ) );
+ 32                 checkboxCellsNoOverlayPanel.<span class="caret-color-insert-mode">setBorder</span>( <span class="literal">new</span> CompoundBorder( <span class="literal">new</span> TitledBorder( <span class="string">&quot;</span><span class="string"> Mail Mockup Checkbox Cell Centroid - No Overlay </span><span class="string">&quot;</span> ), <span class="literal">new</span> EmptyBorder( <span class="number">0</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span> ) ) );
+ 33                 checkboxCellsWithOverlayPanel.<span class="caret-color-insert-mode">setBorder</span>( <span class="literal">new</span> CompoundBorder( <span class="literal">new</span> TitledBorder( <span class="string">&quot;</span><span class="string"> Above w/ &#39;Most Likely Widget&#39; Touch Test Overlay </span><span class="string">&quot;</span> ), <span class="literal">new</span> EmptyBorder( <span class="number">0</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span> ) ) );
+ 34 
+ 35                 <span class="comment">// Create content pane JPanel</span>
+ 36                 JPanel holder = <span class="literal">new</span> JPanel();
+ 37                 holder.<span class="caret-color-insert-mode">setBorder</span>( <span class="literal">new</span> EmptyBorder( <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span> ) );
+ 38                 GridLayout gl = <span class="literal">new</span> GridLayout( <span class="number">2</span>, <span class="number">2</span> );
+ 39                 gl.<span class="caret-color-insert-mode">setHgap</span>( <span class="number">5</span> );
+ 40                 gl.<span class="caret-color-insert-mode">setVgap</span>( <span class="number">5</span> );
+ 41                 holder.<span class="caret-color-insert-mode">setLayout</span>( gl );
+ 42                 holder.<span class="caret-color-insert-mode">add</span>( checkboxCentroidsNoOverlayPanel );
+ 43                 holder.<span class="caret-color-insert-mode">add</span>( checkboxCellsNoOverlayPanel );
+ 44                 holder.<span class="caret-color-insert-mode">add</span>( checkboxCentroidsWithOverlayPanel );
+ 45                 holder.<span class="caret-color-insert-mode">add</span>( checkboxCellsWithOverlayPanel );
+ 46 
+ 47                 <span class="comment">// Create JFrame and add content panel, etc...</span>
+ 48                 JFrame jf = <span class="literal">new</span> JFrame();
+ 49                 jf.<span class="caret-color-insert-mode">setContentPane</span>(  holder );
+ 50                 jf.<span class="caret-color-insert-mode">setSize</span>( <span class="number">960</span>, <span class="number">940</span> ); <span class="comment">// 450, 460 );</span>
+ 51                 jf.<span class="caret-color-insert-mode">setResizable</span>( <span class="literal">false</span> );
+ 52                 jf.<span class="caret-color-insert-mode">setTitle</span>( <span class="string">&quot;</span><span class="string">Most Likely Widget Touch Point Tester</span><span class="string">&quot;</span> );
+ 53                 jf.<span class="caret-color-insert-mode">setDefaultCloseOperation</span>( JFrame.<span class="string">EXIT_ON_CLOSE</span> );
+ 54                 jf.<span class="caret-color-insert-mode">setVisible</span>( <span class="literal">true</span> );
+ 55             }
+ 56         } );
+ 57     }
+ 58 
+ 59     <span class="comment">///////////////////////////////</span>
+ 60     <span class="literal">private</span> <span class="literal">static</span> JPanel makePanelWithInsets( <span class="literal">int</span> insetSize, JPanel content ) {
+ 61         JPanel p = <span class="literal">new</span> JPanel();
+ 62         Border margin = BorderFactory.<span class="caret-color-insert-mode">createEmptyBorder</span>( insetSize, insetSize, insetSize, insetSize );
+ 63         p.<span class="caret-color-insert-mode">setBorder</span>( margin );
+ 64         p.<span class="caret-color-insert-mode">setLayout</span>( <span class="literal">new</span> BorderLayout() );
+ 65         p.<span class="caret-color-insert-mode">add</span>( content, BorderLayout.<span class="string">CENTER</span> );
+ 66         <span class="literal">return</span> p;
+ 67     }
+ 68 
+ 69 } <span class="comment">// End class: Main</span>
+ 70 
+ 71 <span class="comment">///////////////////////////////</span>
+ 72 <span class="comment">// Class which draws a mockup of a smartphone e-mail app</span>
+ 73 <span class="comment">///////////////////////////////</span>
+ 74 
+ 75 <span class="literal">class</span> MockupMailPanel <span class="literal">extends</span> JPanel {
+ 76 
+ 77     <span class="comment">// Static data</span>
+ 78     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> <span class="literal">int</span> <span class="caret-color-insert-mode">CONTROL_HORIZ_MARGIN</span> = <span class="number">0</span>;
+ 79     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> <span class="literal">int</span> <span class="caret-color-insert-mode">LINE_SEP_HEIGHT</span> = <span class="number">2</span>;
+ 80     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> <span class="literal">int</span> <span class="caret-color-insert-mode">PANEL_CELL_HEIGHT</span> = <span class="number">95</span>;
+ 81     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> <span class="literal">int</span> <span class="caret-color-insert-mode">VERT_MARGIN</span> = <span class="number">20</span>; <span class="comment">// Gap between top of window and beginning of mockup email panel</span>
+ 82     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> Color <span class="caret-color-insert-mode">BKG_CLR</span> = <span class="literal">new</span> Color( <span class="number">236</span>, <span class="number">236</span>, <span class="number">236</span> );
+ 83     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> Color <span class="caret-color-insert-mode">LINE_DARK_CLR</span> = <span class="literal">new</span> Color( <span class="number">166</span>, <span class="number">166</span>, <span class="number">166</span> );
+ 84     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> Color <span class="caret-color-insert-mode">LINE_LITE_CLR</span> = <span class="literal">new</span> Color( <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span> );
+ 85     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> Color <span class="caret-color-insert-mode">CHECKBOX_LINE_CLR</span> = <span class="literal">new</span> Color( <span class="number">109</span>, <span class="number">109</span>, <span class="number">109</span> );
+ 86     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> Color <span class="caret-color-insert-mode">CHECKBOX_FILL_CLR</span> = <span class="literal">new</span> Color( <span class="number">201</span>, <span class="number">201</span>, <span class="number">201</span> );
+ 87     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> <span class="literal">int</span> <span class="caret-color-insert-mode">CHECKBOX_SIZE</span> = <span class="number">22</span>;
+ 88     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> <span class="literal">int</span> <span class="caret-color-insert-mode">CELL_MARGIN</span> = <span class="number">15</span>;
+ 89     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> <span class="literal">int</span> <span class="caret-color-insert-mode">MAIL_TEXT_INSET</span> = <span class="number">2</span> * <span class="string">CELL_MARGIN</span> + <span class="string">CHECKBOX_SIZE</span>;
+ 90     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> String [] <span class="caret-color-insert-mode">MAIL_TIMES</span> = { <span class="string">&quot;</span><span class="string">7:37 AM</span><span class="string">&quot;</span>, <span class="string">&quot;</span><span class="string">7:16 AM</span><span class="string">&quot;</span>, <span class="string">&quot;</span><span class="string">6:42 AM</span><span class="string">&quot;</span>, <span class="string">&quot;</span><span class="string">6:05 AM</span><span class="string">&quot;</span> };
+ 91     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> <span class="literal">int</span> <span class="caret-color-insert-mode">numEmails</span> = <span class="string">MAIL_TIMES</span>.<span class="string">length</span>;
+ 92     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> Color [] <span class="caret-color-insert-mode">checkboxCentroidColors</span> = { Color.<span class="string">RED</span>, <span class="literal">new</span> Color( <span class="number">0x4a</span>, <span class="number">0xb2</span>, <span class="number">0x3a</span> ), Color.<span class="string">BLUE</span>, <span class="literal">new</span> Color( <span class="number">0x4a</span>, <span class="number">0xb2</span>, <span class="number">0xff</span> ) };
+ 93     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> Color [] <span class="caret-color-insert-mode">emailTextAreaCentroidColors</span> = { Color.<span class="string">CYAN</span>, Color.<span class="string">MAGENTA</span>, <span class="literal">new</span> Color( <span class="number">0x9a</span>, <span class="number">0x6e</span>, <span class="number">0x04</span> ), <span class="literal">new</span> Color( <span class="number">0xff</span>, <span class="number">0x77</span>, <span class="number">0x04</span> ) };
+ 94     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> Font <span class="caret-color-insert-mode">font</span> = <span class="literal">new</span> Font( <span class="string">&quot;</span><span class="string">Arial</span><span class="string">&quot;</span>, Font.<span class="string">PLAIN</span>, <span class="number">16</span> );
+ 95 
+ 96     <span class="comment">// Instance data</span>
+ 97     <span class="literal">private</span> List&lt;Rectangle&gt; <span class="caret-color-insert-mode">checkboxRects</span> = <span class="literal">new</span> ArrayList&lt;&gt;();
+ 98     <span class="literal">private</span> List&lt;Rectangle&gt; <span class="caret-color-insert-mode">checkboxCellRects</span> = <span class="literal">new</span> ArrayList&lt;&gt;();
+ 99     <span class="literal">private</span> List&lt;Rectangle&gt; <span class="caret-color-insert-mode">mailCellRects</span> = <span class="literal">new</span> ArrayList&lt;&gt;();
+100     <span class="literal">private</span> <span class="literal">final</span> <span class="literal">boolean</span> <span class="caret-color-insert-mode">useCellCentroidsForCheckboxes</span>;
+101     <span class="literal">private</span> <span class="literal">final</span> <span class="literal">boolean</span> <span class="caret-color-insert-mode">drawOverlay</span>;
+102 
+103     <span class="comment">///////////////////////////////</span>
+104     <span class="literal">public</span> MockupMailPanel( <span class="literal">boolean</span> useCellCentroidsForCheckboxes, <span class="literal">boolean</span> drawOverlay ) {
+105         <span class="literal">this</span>.<span class="string">useCellCentroidsForCheckboxes</span> = useCellCentroidsForCheckboxes;
+106         <span class="literal">this</span>.<span class="string">drawOverlay</span> = drawOverlay;
+107     }
+108 
+109     <span class="comment">///////////////////////////////</span>
+110     @Override
+111     <span class="literal">public</span> <span class="literal">void</span> paintComponent( Graphics g ) {
+112         Graphics2D g2d = ( Graphics2D ) g;
+113         g2d.setRenderingHint( java.awt.RenderingHints.<span class="string">KEY_ANTIALIASING</span>, java.awt.RenderingHints.<span class="string">VALUE_ANTIALIAS_ON</span> );
+114 
+115         g2d.setColor( <span class="string">BKG_CLR</span> );
+116         g2d.fillRect( <span class="number">0</span>, <span class="number">0</span>, <span class="caret-color-insert-mode">getWidth</span>(), <span class="caret-color-insert-mode">getHeight</span>() );
+117         <span class="literal">int</span> x = <span class="number">0</span>;
+118         <span class="literal">int</span> y = <span class="string">VERT_MARGIN</span>;
+119         <span class="literal">for</span> ( <span class="literal">int</span> i = <span class="number">0</span>; i &lt; <span class="string">numEmails</span>; ++i ) {
+120             <span class="caret-color-insert-mode">drawMailEntry</span>( i, g2d, x, y );
+121             y += <span class="string">PANEL_CELL_HEIGHT</span> + <span class="number">2</span>; <span class="comment">// 2 pixels for the separator lines</span>
+122         }
+123         <span class="caret-color-insert-mode">drawCentroids</span>( g2d );
+124         <span class="literal">if</span> ( <span class="string">drawOverlay</span> )
+125             <span class="caret-color-insert-mode">drawMostLikelyWidgetOverlay</span>( g2d );
+126     }
+127 
+128     <span class="comment">///////////////////////////////</span>
+129     <span class="literal">private</span> <span class="literal">void</span> drawMailEntry( <span class="literal">int</span> emailNum, Graphics2D g2d, <span class="literal">int</span> x, <span class="literal">int</span> y ) {
+130 
+131         <span class="comment">// Draw separator lines</span>
+132         g2d.setColor( <span class="string">LINE_DARK_CLR</span> );
+133         g2d.drawLine( x, y, <span class="caret-color-insert-mode">getWidth</span>(), y );
+134         ++y;
+135         g2d.setColor( <span class="string">LINE_LITE_CLR</span> );
+136         g2d.drawLine( x, y, <span class="caret-color-insert-mode">getWidth</span>(), y );
+137         ++y;
+138 
+139         <span class="comment">// Draw checkbox and save rectangle for later</span>
+140         Rectangle r = <span class="literal">new</span> Rectangle( x + <span class="string">CELL_MARGIN</span>, y + <span class="string">CELL_MARGIN</span>, <span class="string">CHECKBOX_SIZE</span>, <span class="string">CHECKBOX_SIZE</span> );
+141         <span class="literal">if</span> ( <span class="string">checkboxRects</span>.size() &lt; <span class="string">numEmails</span> )
+142             <span class="string">checkboxRects</span>.add( r );
+143         <span class="caret-color-insert-mode">drawCheckBox</span>( g2d, r );
+144 
+145         <span class="comment">// Compute and save CELL rectangle in which checkbox is contained</span>
+146         r = <span class="literal">new</span> Rectangle( x, y, <span class="string">MAIL_TEXT_INSET</span>, <span class="string">PANEL_CELL_HEIGHT</span> );
+147         <span class="literal">if</span> ( <span class="string">checkboxCellRects</span>.size() &lt; <span class="string">numEmails</span> )
+148             <span class="string">checkboxCellRects</span>.add( r );
+149 
+150         <span class="comment">// Draw email text summary cell...</span>
+151 
+152         <span class="comment">// First compute cell rectangle containing text</span>
+153         r = <span class="literal">new</span> Rectangle( x + <span class="string">MAIL_TEXT_INSET</span>, y, <span class="caret-color-insert-mode">getWidth</span>() - <span class="number">2</span> * <span class="string">CELL_MARGIN</span>, <span class="string">PANEL_CELL_HEIGHT</span> );
+154         <span class="literal">if</span> ( <span class="string">mailCellRects</span>.size() &lt; <span class="string">numEmails</span> )
+155             <span class="string">mailCellRects</span>.add( r );
+156 
+157         <span class="comment">// Create mockup e-mail header text lines</span>
+158         String [] textLines = <span class="literal">new</span> String [] { <span class="string">&quot;</span><span class="string">Email Sender #</span><span class="string">&quot;</span> + ( emailNum + <span class="number">1</span> ),
+159                                                                  <span class="string">&quot;</span><span class="string">Email subject blah blah yada yada blah blah...</span><span class="string">&quot;</span> + <span class="string">MAIL_TIMES</span>[ emailNum ],
+160                                                                  <span class="string">&quot;</span><span class="string">First line of email body blah blah blah yada yada blah</span><span class="string">&quot;</span>,
+161                                                                  <span class="string">&quot;</span><span class="string">blah</span><span class="string">&quot;</span> };
+162 
+163         <span class="comment">// Draw the text lines for the mockup e-mail</span>
+164         <span class="literal">int</span> textX = x + <span class="string">MAIL_TEXT_INSET</span>;
+165         <span class="literal">int</span> textY = y + <span class="string">CELL_MARGIN</span>;
+166         g2d.setColor( Color.<span class="string">BLACK</span> );
+167         g2d.setFont( <span class="string">font</span> );
+168         FontMetrics fm = <span class="caret-color-insert-mode">getFontMetrics</span>( g2d.getFont() );
+169         <span class="literal">for</span> ( <span class="literal">int</span> i = <span class="number">0</span>; i &lt; textLines.<span class="string">length</span>; ++i ) {
+170             LineMetrics lm = fm.<span class="caret-color-insert-mode">getLineMetrics</span>( textLines[ i ], g2d );
+171             g2d.drawString( textLines[ i ], textX, textY + lm.getAscent() - <span class="number">3</span> ); <span class="comment">// The 3 is a fudge factor for this quickly hacked code</span>
+172             textY += lm.getHeight();
+173         }
+174     }
+175 
+176     <span class="comment">///////////////////////////////</span>
+177     <span class="literal">private</span> <span class="literal">void</span> drawCentroids( Graphics2D g2d ) {
+178 
+179         <span class="comment">// Draw checkbox centroid crosshairs</span>
+180         <span class="literal">for</span> ( <span class="literal">int</span> i = <span class="number">0</span>; i &lt; <span class="string">numEmails</span>; ++i ) {
+181             Rectangle r = ( <span class="string">useCellCentroidsForCheckboxes</span> ) ? <span class="string">checkboxCellRects</span>.get( i ) : <span class="string">checkboxRects</span>.get( i );
+182             <span class="caret-color-insert-mode">drawCrosshairInRect</span>( g2d, r, <span class="string">checkboxCentroidColors</span>[ i ] );
+183         }
+184 
+185         <span class="comment">// Draw email text area cell centroid crosshairs</span>
+186         <span class="literal">for</span> ( <span class="literal">int</span> i = <span class="number">0</span>; i &lt; <span class="string">numEmails</span>; ++i ) {
+187             Rectangle r = <span class="string">mailCellRects</span>.get( i );
+188             <span class="caret-color-insert-mode">drawCrosshairInRect</span>( g2d, r, <span class="string">emailTextAreaCentroidColors</span>[ i ] );
+189         }
+190     }
+191 
+192     <span class="comment">///////////////////////////////</span>
+193     <span class="literal">private</span> <span class="literal">void</span> drawMostLikelyWidgetOverlay( Graphics2D g2d ) {
+194 
+195         <span class="comment">// Do not route touch events to widgets farther than this distance</span>
+196         <span class="literal">int</span> radiusOfConfusion = <span class="number">70</span>;
+197 
+198         <span class="comment">// Make single list of special purpose colored rectangle objects to simplify(? ;-) this algorithm eval code</span>
+199         List&lt;ColoredRect&gt; cr = <span class="literal">new</span> ArrayList&lt;&gt;();
+200         List&lt;Rectangle&gt; cbRects = ( <span class="string">useCellCentroidsForCheckboxes</span> ) ? <span class="string">checkboxCellRects</span> : <span class="string">checkboxRects</span>;
+201         <span class="literal">for</span> ( <span class="literal">int</span> i = <span class="number">0</span>; i &lt; <span class="string">numEmails</span>; ++i ) {
+202             cr.add( <span class="literal">new</span> ColoredRect( cbRects.get( i ), <span class="string">checkboxCentroidColors</span>[ i ] ) );
+203             cr.add( <span class="literal">new</span> ColoredRect( <span class="string">mailCellRects</span>.get( i ), <span class="string">emailTextAreaCentroidColors</span>[ i ] ) );
+204         }
+205 
+206         <span class="comment">// Evaluate every pixel in this JPanel-derived class containing mocked up email summary list</span>
+207         <span class="literal">int</span> w = <span class="caret-color-insert-mode">getWidth</span>();
+208         <span class="literal">int</span> h = <span class="caret-color-insert-mode">getHeight</span>();
+209         <span class="literal">for</span> ( <span class="literal">int</span> i = <span class="number">0</span>; i &lt; h; ++i ) {
+210             <span class="literal">int</span> y = i;
+211             <span class="literal">for</span> ( <span class="literal">int</span> j = <span class="number">0</span>; j &lt; w; ++j ) {
+212                 <span class="literal">int</span> x = j;
+213                 ColoredRect mostLikelyWidget = <span class="caret-color-insert-mode">getMostLikelyWidget</span>( x, y, cr, radiusOfConfusion );
+214                 <span class="literal">if</span> ( mostLikelyWidget != <span class="literal">null</span> )
+215                     <span class="caret-color-insert-mode">drawAlphaPixel</span>( g2d, x, y, mostLikelyWidget.<span class="string">c</span> );
+216             }
+217         }
+218     }
+219 
+220     <span class="comment">///////////////////////////////</span>
+221     <span class="comment">// Most Likely Widget Algorithm:  (simple implementation)</span>
+222     <span class="comment">//  1) Compute closest widget (with closest centroid) to touch point but which is within radiusOfConfusion</span>
+223     <span class="comment">//  2) Compute widget rectangle which actually contains touch point</span>
+224     <span class="comment">//  3) Route touch event (x,y) to nearest widget if a nearby widget found, else route to widget w/bounding rect containing (x,y)</span>
+225     <span class="comment">// Return null if event should not be handled</span>
+226     <span class="comment">///////////////////////////////</span>
+227     <span class="literal">private</span> <span class="literal">static</span> ColoredRect getMostLikelyWidget( <span class="literal">int</span> x, <span class="literal">int</span> y, List&lt;ColoredRect&gt; widgets, <span class="literal">int</span> radiusOfConfusion ) {
+228         <span class="literal">int</span> minDist = Integer.<span class="string">MAX_VALUE</span>;
+229         ColoredRect closestWidget = <span class="literal">null</span>;
+230         ColoredRect pointInWidget = <span class="literal">null</span>;
+231         <span class="literal">for</span> ( ColoredRect cr : widgets ) {
+232             Rectangle r = cr.<span class="string">r</span>;
+233             <span class="literal">int</span> xc = r.<span class="string">x</span> + r.<span class="string">width</span>/<span class="number">2</span>;
+234             <span class="literal">int</span> yc = r.<span class="string">y</span> + r.<span class="string">height</span>/<span class="number">2</span>;
+235             <span class="literal">int</span> dist = ( <span class="literal">int</span> ) Math.<span class="caret-color-insert-mode">round</span>( Math.<span class="caret-color-insert-mode">sqrt</span>( ( x - xc ) * ( x - xc ) + ( y - yc ) * ( y - yc ) ) );
+236             <span class="literal">if</span> ( dist &lt; minDist &amp;&amp; dist &lt; radiusOfConfusion ) { <span class="comment">// Step 1</span>
+237                 minDist = dist;
+238                 closestWidget= cr;
+239             }
+240             <span class="literal">if</span> ( r.<span class="caret-color-insert-mode">contains</span>( x, y ) )  {  <span class="comment">// Step 2</span>
+241                 pointInWidget = cr;
+242             }
+243         }
+244         <span class="literal">return</span> ( closestWidget != <span class="literal">null</span> ) ? closestWidget : pointInWidget;  <span class="comment">// Step 3</span>
+245     }
+246 
+247     <span class="comment">///////////////////////////////</span>
+248     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">void</span> drawAlphaPixel( Graphics2D g2d, <span class="literal">int</span> x, <span class="literal">int</span> y, Color c ) {
+249         <span class="literal">int</span> overlayAlpha = <span class="number">50</span>;
+250         g2d.setColor( <span class="literal">new</span> Color( c.<span class="caret-color-insert-mode">getRed</span>(), c.<span class="caret-color-insert-mode">getGreen</span>(), c.<span class="caret-color-insert-mode">getBlue</span>(), overlayAlpha ) );
+251         g2d.fillRect( x, y, <span class="number">1</span>, <span class="number">1</span> );
+252     }
+253 
+254     <span class="comment">///////////////////////////////</span>
+255     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">void</span> drawCheckBox( Graphics2D g2d, Rectangle r ) {
+256         g2d.setColor( <span class="string">CHECKBOX_FILL_CLR</span> );
+257         g2d.fillRect( r.<span class="string">x</span>, r.<span class="string">y</span>, r.<span class="string">width</span>, r.<span class="string">height</span> );
+258         g2d.setColor( <span class="string">CHECKBOX_LINE_CLR</span> );
+259         g2d.drawLine( r.<span class="string">x</span>, r.<span class="string">y</span>, r.<span class="string">x</span> + <span class="string">CHECKBOX_SIZE</span> - <span class="number">1</span>, r.<span class="string">y</span> );
+260         g2d.drawLine( r.<span class="string">x</span>, r.<span class="string">y</span>, r.<span class="string">x</span>, r.<span class="string">y</span> + <span class="string">CHECKBOX_SIZE</span> - <span class="number">1</span> );
+261     }
+262 
+263     <span class="comment">///////////////////////////////</span>
+264     <span class="literal">private</span> <span class="literal">static</span> <span class="literal">void</span> drawCrosshairInRect( Graphics2D g2d, Rectangle r, Color c ) {
+265         <span class="literal">int</span> crosshairRadius = <span class="number">7</span>;
+266         <span class="literal">int</span> strokeSize = <span class="number">3</span>;
+267         <span class="literal">int</span> xc = r.<span class="string">x</span> + r.<span class="string">width</span>/<span class="number">2</span>;
+268         <span class="literal">int</span> yc = r.<span class="string">y</span> + r.<span class="string">height</span>/<span class="number">2</span>;
+269         g2d.setColor( c );
+270         g2d.setStroke( <span class="literal">new</span> BasicStroke( strokeSize ) );
+271         g2d.drawLine( xc - crosshairRadius,  yc, xc + crosshairRadius, yc );
+272         g2d.drawLine( xc, yc - crosshairRadius, xc, yc + crosshairRadius );
+273     }
+274 
+275 } <span class="comment">// End class: MockupMailPanel</span>
+276 
+277 <span class="comment">///////////////////////////////</span>
+278 <span class="comment">// Helper class</span>
+279 <span class="comment">///////////////////////////////</span>
+280 
+281 <span class="literal">final</span> <span class="literal">class</span> ColoredRect {
+282     <span class="literal">public</span> <span class="literal">final</span> Rectangle <span class="caret-color-insert-mode">r</span>;
+283     <span class="literal">public</span> <span class="literal">final</span> Color <span class="caret-color-insert-mode">c</span>;
+284     <span class="literal">public</span> ColoredRect( Rectangle r, Color c ) {
+285         <span class="literal">this</span>.<span class="string">r</span> = r;
+286         <span class="literal">this</span>.<span class="string">c</span> = c;
+287     }
+288 
+289 } <span class="comment">// End class: ColoredRect</span>
+290 
+291 
+292 
+293 
+294 
+295 
+296 
+297 
+298 
+</pre></body>
+</html>
