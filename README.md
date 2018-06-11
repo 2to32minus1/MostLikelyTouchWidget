@@ -1,5 +1,5 @@
 # MostLikelyTouchWidget
-First-draft prototype of better way to map touch (x, y) points to UI widgets to reduce near miss errors
+First-draft prototype of better way to map touch event (x, y) points to UI widgets to reduce near miss errors
 
 A Method for More Intelligent Touch Event Processing
 
